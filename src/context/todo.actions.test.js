@@ -1,4 +1,11 @@
-import { setTodos, addTodo, SET_TODOS, ADD_TODO } from "./todo.actions";
+import {
+  setTodos,
+  addTodo,
+  removeTodo,
+  SET_TODOS,
+  ADD_TODO,
+  REMOVE_TODO,
+} from "./todo.actions";
 
 describe("todo.actions", () => {
   describe("setTodos", () => {
@@ -21,6 +28,17 @@ describe("todo.actions", () => {
         data: {
           id: 0,
           description: "new todo!",
+        },
+      });
+    });
+  });
+
+  describe("removeTodo", () => {
+    it("should dispatch action with type REMOVE_TODO", () => {
+      expect(removeTodo(0)).toEqual({
+        type: REMOVE_TODO,
+        data: {
+          id: 0,
         },
       });
     });

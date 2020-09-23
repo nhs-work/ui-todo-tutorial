@@ -3,17 +3,23 @@ import React, { useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { addTodo } from "../context/todo.actions";
 import { TodoContext } from "../context/TodoContextProvider";
+import { firebaseApi } from "../services/firebaseApi";
 
 export const TodoInput = () => {
   const [inputValue, setInputValue] = useState("");
   const { dispatch } = useContext(TodoContext);
 
-  const handleAddClick = () => {
+  const handleAddClick = async () => {
     const id = uuidv4();
 
-    dispatch(addTodo(id, inputValue));
-    setInputValue("");
-  }
+    await firebaseApi
+      .addTodo(id, inputValue)
+      .then(() => {
+        dispatch(addTodo(id, inputValue));
+        setInputValue("");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="todo-input">

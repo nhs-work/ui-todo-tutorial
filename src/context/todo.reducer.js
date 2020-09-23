@@ -1,4 +1,4 @@
-import { SET_TODOS, ADD_TODO } from "./todo.actions";
+import { SET_TODOS, ADD_TODO, REMOVE_TODO, UPDATE_TODO } from "./todo.actions";
 
 export const todoReducer = (state, action) => {
   const { type, data } = action;
@@ -11,6 +11,18 @@ export const todoReducer = (state, action) => {
         [data.id]: { description: data.description },
       };
       return { ...state, todos };
+    case REMOVE_TODO:
+      const newTodo = {
+        ...state.todos,
+      };
+      delete newTodo[data.id];
+      return { ...state, todos: newTodo };
+    case UPDATE_TODO:
+      const newTodo2 = {
+        ...state.todos,
+        [data.id]: { description: data.description },
+      };
+      return { ...state, todos: newTodo2 };
     default:
       return state;
   }
